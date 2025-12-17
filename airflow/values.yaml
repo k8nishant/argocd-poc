@@ -12,6 +12,10 @@ workers:
 
 postgresql:
   enabled: true
+  image:
+    repository: bitnami/postgresql
+    tag: 16
+
 
 redis:
   enabled: true
