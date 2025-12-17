@@ -11,7 +11,7 @@ spec:
     chart: postgresql
     targetRevision: 15.5.21
     helm:
-    releaseName: postgresql-test
+      releaseName: postgresql-test
       valueFiles:
         - ../postgresql/values.yaml
 
