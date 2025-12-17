@@ -1,26 +1,27 @@
-image:
-  registry: docker.io
-  repository: bitnami/postgresql
-  tag: 15
-  pullPolicy: IfNotPresent
+postgresql:
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 16.3.0-debian-12-r1
+    pullPolicy: IfNotPresent
 
-auth:
-  username: airflowuser
-  password: airflowpassword
-  database: airflowappdb
+  auth:
+    username: airflowuser
+    password: airflowpassword
+    database: airflowappdb
 
-primary:
-  persistence:
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 100m
+        memory: 512Mi
+
+  volumePermissions:
     enabled: true
-    size: 1Gi
-
-  resources:
-    requests:
-      cpu: 50m
-      memory: 256Mi
-    limits:
-      cpu: 100m
-      memory: 512Mi
-
-volumePermissions:
-  enabled: true
