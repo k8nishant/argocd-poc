@@ -13,8 +13,10 @@ workers:
 postgresql:
   enabled: true
   image:
+    registry: docker.io
     repository: bitnami/postgresql
     tag: 16
+    digest: "sha256:973afcce1283261754b8c597ef4a2c4287f50bcde8800c4cad8cdb7d97a85a58"
 
 
 redis:
