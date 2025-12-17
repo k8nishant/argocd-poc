@@ -15,9 +15,7 @@ postgresql:
   image:
     registry: docker.io
     repository: bitnami/postgresql
-    tag: 16
-    digest: "sha256:973afcce1283261754b8c597ef4a2c4287f50bcde8800c4cad8cdb7d97a85a58"
-
+    tag: sha256-5c14ef3701dc6238ba06c2a08c5a12a4475d19436247b8da5d93a5ed70e7fada
 
 redis:
   enabled: true
