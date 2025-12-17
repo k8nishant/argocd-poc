@@ -16,7 +16,7 @@ spec:
       #   - ../postgresql/values.yaml
       values: |
         image:
-          tag: 16
+          tag: 15
 
   destination:
     server: https://kubernetes.default.svc
