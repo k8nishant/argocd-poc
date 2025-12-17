@@ -10,6 +10,8 @@ spec:
     repoURL: git@github.com:k8nishant/argocd-poc.git
     targetRevision: main
     path: postgresql
+    helm:
+      dependencyUpdate: true 
 
   destination:
     server: https://kubernetes.default.svc
