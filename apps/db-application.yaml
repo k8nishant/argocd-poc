@@ -7,12 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: postgresql
-    targetRevision: 15.5.21
-    helm:
-      valueFiles:
-        - ../postgresql/values.yaml
+    repoURL: git@github.com:k8nishant/argocd-poc.git
+    targetRevision: main
+    path: postgresql
 
   destination:
     server: https://kubernetes.default.svc
