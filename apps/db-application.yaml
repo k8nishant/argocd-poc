@@ -7,11 +7,13 @@ spec:
   project: default
 
   source:
-    repoURL: git@github.com:k8nishant/argocd-poc.git
-    targetRevision: main
-    path: postgresql
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: postgresql
+    targetRevision: 15.5.21
     helm:
-      dependencyUpdate: true 
+    releaseName: postgresql-test
+      valueFiles:
+        - ../postgresql/values.yaml
 
   destination:
     server: https://kubernetes.default.svc
