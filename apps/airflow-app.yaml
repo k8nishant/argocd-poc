@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://airflow.apache.org
     chart: airflow
-    targetRevision: 1.18.0   # use latest chart version
+    targetRevision: 1.17.0   # use latest chart version
     helm:
       releaseName: airflow
       valueFiles:
