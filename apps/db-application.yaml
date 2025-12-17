@@ -16,7 +16,7 @@ spec:
       #   - ../postgresql/values.yaml
       values: |
         image:
-          tag: 16.3.0-debian-12-r1
+          tag: 16
 
   destination:
     server: https://kubernetes.default.svc
