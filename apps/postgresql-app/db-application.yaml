@@ -14,7 +14,7 @@ spec:
         releaseName: postgresql
         timeout: 15m
         valueFiles:
-          - $values/apps/database/dbvalues.yaml 
+          - $values/apps/postgresql-app/dbvalues.yaml 
 
     - repoURL: git@github.com:k8nishant/argocd-poc.git
       targetRevision: main
