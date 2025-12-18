@@ -7,13 +7,17 @@ spec:
   project: default
 
   source:
-    repoURL: https://airflow.apache.org
-    chart: airflow
-    targetRevision: 1.17.0   # use latest chart version
-    helm:
-      releaseName: airflow
-      valueFiles:
-        - ../airflow/values.yaml
+    - repoURL: https://airflow.apache.org
+      chart: airflow
+      targetRevision: 1.17.0   # use latest chart version
+      helm:
+        releaseName: airflow
+        valueFiles:
+          - $values/apps/airflow/values.yaml
+          
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      ref: values
 
   destination:
     server: https://kubernetes.default.svc

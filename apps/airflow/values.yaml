@@ -11,7 +11,16 @@ workers:
   replicas: 1
 
 postgresql:
-  enabled: true
+  enabled: false
 
 redis:
   enabled: true
+
+data:
+  metadataConnection:
+    user: airflowuser
+    pass: airflowpassword
+    protocol: postgresql
+    host: postgresql.database
+    port: 5432
+    db: airflowappdb
