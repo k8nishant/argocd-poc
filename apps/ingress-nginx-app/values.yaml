@@ -2,7 +2,7 @@ controller:
   replicaCount: 1
 
   service:
-    type: NodePort   # Best for local clusters
+    type: LoadBalancer   # Best for local clusters
 
   admissionWebhooks:
     enabled: true
