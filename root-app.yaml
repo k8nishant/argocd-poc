@@ -19,7 +19,7 @@ spec:
       source:
         repoURL: git@github.com:k8nishant/argocd-poc.git
         targetRevision: main
-        path: '{{path}}/app'
+        path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{path.basename}}'
