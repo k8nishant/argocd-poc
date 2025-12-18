@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: git@github.com:k8nishant/argocd-poc.git
     targetRevision: main
-    path: localingress-app
+    path: apps/localingress-app
 
   destination:
     server: https://kubernetes.default.svc
