@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: git@github.com:k8nishant/argocd-poc.git
     targetRevision: main
-    path: apps/local-registry-app
+    path: apps/local-registry-app/template
 
   destination:
     server: https://kubernetes.default.svc
