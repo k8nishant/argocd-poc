@@ -12,11 +12,11 @@ spec:
     targetRevision: 15.5.21
     helm:
       releaseName: postgresql
-      # valueFiles:
-      #   - ../postgresql/values.yaml
-      values: |
-        image:
-          tag: 15
+      valueFiles:
+        - ../postgresql/values.yaml
+      # values: |
+      #   image:
+      #     tag: 15
 
   destination:
     server: https://kubernetes.default.svc
