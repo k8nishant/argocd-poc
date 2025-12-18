@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tinybert
+  namespace: ml-inference
+  labels:
+    app: tinybert
+    model: tinybert
+    model-version: v1.0.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tinybert
+  template:
+    metadata:
+      labels:
+        app: tinybert
+    spec:
+      containers:
+      - name: tinybert
+        image: registry.registry.svc.cluster.local:5000/tinybert-inference:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "1Gi"
+          limits:
+            cpu: "500m"
+            memory: "2Gi"
