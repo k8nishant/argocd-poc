@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: localingress
+  name: argo-ingress
   namespace: argocd
 spec:
   project: default
