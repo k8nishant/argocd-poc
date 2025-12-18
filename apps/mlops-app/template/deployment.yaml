@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: tinybert
-        image: registry.registry.svc.cluster.local:5000/tinybert-inference:1.0.0
+        image: registry.127.0.0.1.nip.io/tinybert-inference:1.0.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
