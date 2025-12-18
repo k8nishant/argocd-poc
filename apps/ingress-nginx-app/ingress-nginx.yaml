@@ -6,15 +6,17 @@ metadata:
 spec:
   project: default
 
-  source:
-    repoURL: https://kubernetes.github.io/ingress-nginx
-    chart: ingress-nginx
-    targetRevision: 4.10.0   # pin version
-    helm:
-      releaseName: ingress-nginx
-      valueFiles:
-        - values.yaml
-
+  sources:
+    - repoURL: https://kubernetes.github.io/ingress-nginx
+      chart: ingress-nginx
+      targetRevision: 4.10.0   # pin version
+      helm:
+        releaseName: ingress-nginx
+        valueFiles:
+          - $values/apps/ingress-nginx-app/values.yaml
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: ingress-nginx
