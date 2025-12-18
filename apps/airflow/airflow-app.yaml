@@ -6,12 +6,13 @@ metadata:
 spec:
   project: default
 
-  source:
+  sources:
     - repoURL: https://airflow.apache.org
       chart: airflow
       targetRevision: 1.17.0   # use latest chart version
       helm:
         releaseName: airflow
+        timeout: 15m
         valueFiles:
           - $values/apps/airflow/values.yaml
           
