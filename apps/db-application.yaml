@@ -15,7 +15,6 @@ spec:
       timeout: 15m
       valueFiles:
         - dbvalues.yaml
-        - ../postgresql/values.yaml
       # values: |
       #   image:
       #     tag: latest
