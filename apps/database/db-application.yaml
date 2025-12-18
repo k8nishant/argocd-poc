@@ -7,17 +7,17 @@ spec:
   project: default
 
   source:
-  - repoURL: https://charts.bitnami.com/bitnami
+    repoURL: https://charts.bitnami.com/bitnami
     chart: postgresql
     targetRevision: 15.5.21
     helm:
-      releaseName: postgresql
+      releaseName: postgresql-temp
+      timeout: 15m
       valueFiles:
-        - $values/apps/database/values/dbvalues.yaml
-
-  - repoURL: git@github.com:k8nishant/argocd-poc.git
-    targetRevision: main
-    ref: values
+        - /apps/datbase/dbvalues.yaml
+      # values: |
+      #   image:
+      #     tag: latest
 
   destination:
     server: https://kubernetes.default.svc
