@@ -13,11 +13,12 @@ spec:
     helm:
       releaseName: postgresql
       timeout: 15m
-      # valueFiles:
-      #   - ../postgresql/values.yaml
-      values: |
-        image:
-          tag: latest
+      valueFiles:
+        - dbvalues.yaml
+        - ../postgresql/values.yaml
+      # values: |
+      #   image:
+      #     tag: latest
 
   destination:
     server: https://kubernetes.default.svc
