@@ -1,27 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: root-app
+  name: apps-set
   namespace: argocd
 spec:
-  project: default
+  generators:
+  - git:
+      repoURL: git@github.com:k8nishant/argocd-poc.git
+      revision: main
+      directories:
+      - path: apps/*
 
-  source:
-    repoURL: git@github.com:k8nishant/argocd-poc.git
-    targetRevision: main
-    path: apps
-        
-    directory:
-      recurse: true
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - ApplyOutOfSyncOnly=true
-
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:k8nishant/argocd-poc.git
+        targetRevision: main
+        path: '{{path}}/k8s'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
