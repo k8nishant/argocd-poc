@@ -37,8 +37,7 @@ prometheusOperator:
 # Disable persistent storage to avoid unnecessary disk usage
 prometheus:
   prometheusSpec:
-    storageSpec:
-      volumeClaimTemplate: null  # Disables persistent volume claims
+    storageSpec: {}
 
 # Optional: Lower scrape interval to reduce load
 scrapeInterval: 15s  # Scrape metrics every 15 seconds (default is 30s)
