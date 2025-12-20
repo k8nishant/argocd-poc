@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts  # Prometheus Helm Chart repository
+      chart: kube-prometheus-stack  # This chart installs Prometheus and other components like Grafana and Alertmanager
+      targetRevision: 35.0.0  # Pin the version for stability
+      helm:
+        releaseName: prometheus
+        valueFiles:
+          - $values/apps/monitoring/values.yaml  # Custom values.yaml file for Prometheus
+
+    - repoURL: git@github.com:k8nishant/argocd-poc.git  # Your Git repository for other configurations
+      targetRevision: main
+      ref: values  # The path to the specific config (relative to the root of the repo)
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring  # The namespace where Prometheus will be installed
+
+  syncPolicy:
+    automated:
+      prune: true   # Automatically prune resources that are no longer needed
+      selfHeal: true  # Ensure that the resources are kept in sync even after manual changes
+
+    syncOptions:
+      - CreateNamespace=true  # Automatically create the namespace if it doesn't exist
+      - ServerSideApply=true  # Use server-side apply for better conflict management

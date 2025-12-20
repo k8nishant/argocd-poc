@@ -1,0 +1,43 @@
+prometheus:
+  prometheusSpec:
+    replicas: 1  # Use only 1 replica for minimal resource usage
+    resources:
+      requests:
+        memory: 256Mi  # Low memory request
+        cpu: 50m  # Low CPU request
+      limits:
+        memory: 512Mi  # Limit memory usage to 512Mi
+        cpu: 100m  # Limit CPU usage to 500m
+    retention: "1d"  # Retain data for just 1 day (minimize storage usage)
+
+alertmanager:
+  alertmanagerSpec:
+    replicas: 1  # Only 1 replica of Alertmanager
+    resources:
+      requests:
+        memory: 128Mi  # Low memory request for Alertmanager
+        cpu: 10m  # Low CPU request for Alertmanager
+      limits:
+        memory: 256Mi  # Limit memory usage for Alertmanager
+        cpu: 20m  # Limit CPU usage for Alertmanager
+
+grafana:
+  enabled: false  # Disable Grafana to save resources
+  # You can enable this if you need Grafana but it will use more resources.
+
+kube-state-metrics:
+  enabled: false  # Disable kube-state-metrics for low resource usage
+
+nodeExporter:
+  enabled: false  # Disable node-exporter as it's not necessary for a PoC
+
+prometheusOperator:
+  enabled: true  # Ensure the Prometheus operator is enabled (required for managing Prometheus resources)
+
+# Disable persistent storage to avoid unnecessary disk usage
+prometheus:
+  prometheusSpec:
+    storageSpec: {}
+
+# Optional: Lower scrape interval to reduce load
+scrapeInterval: 15s  # Scrape metrics every 15 seconds (default is 30s)
