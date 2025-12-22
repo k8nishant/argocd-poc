@@ -12,3 +12,7 @@ collectors:
 falco:
   rulesFile:
     - /etc/falco/k8s_audit_rules.yaml
+
+k8saudit:
+  enabled: true
+  auditLogPath: /var/log/kubernetes/audit.log
