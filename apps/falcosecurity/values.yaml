@@ -1,1 +1,14 @@
 #https://falco.org/docs/setup/kubernetes/
+
+driver:
+  enabled: false
+
+collectors:
+  syscall:
+    enabled: false
+  k8saudit:
+    enabled: true
+
+falco:
+  rulesFile:
+    - /etc/falco/k8s_audit_rules.yaml
