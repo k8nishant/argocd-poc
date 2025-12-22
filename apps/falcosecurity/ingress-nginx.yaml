@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: falcosecurity
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://falcosecurity.github.io/charts
+      chart: falco
+      targetRevision: 4.8.1
+      helm:
+        releaseName: falco
+        valueFiles:
+          - $values/apps/falcosecurity/values.yaml
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: falco
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
