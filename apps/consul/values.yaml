@@ -28,7 +28,7 @@ ui:
   enabled: true
   # Registers a Kubernetes Service for the Consul UI as a LoadBalancer.
   service:
-    type: LoadBalancer
+    type: ClusterIP
 # Configures and installs the automatic Consul Connect sidecar injector.
 connectInject:
   enabled: true
