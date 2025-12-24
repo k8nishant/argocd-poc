@@ -1,23 +1,22 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: argo-ingress
+  name: argocd-ingress
   namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
-  project: default
-
-  source:
-    repoURL: git@github.com:k8nishant/argocd-poc.git
-    targetRevision: main
-    path: apps/argo-ingress-app
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  ingressClassName: nginx
+  rules:
+  - host: argocd.127.0.0.1.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
