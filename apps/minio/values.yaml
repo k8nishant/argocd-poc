@@ -4,10 +4,6 @@ mode: standalone ## other supported values are "distributed"
 rootUser: "minio"
 rootPassword: "minio"
 
-storageClass: ""
-volumeName: ""
-accessMode: ReadWriteOnce
-size: 5Gi
 
 replicas: 1
 
@@ -44,3 +40,12 @@ users:
   - accessKey: console
     secretKey: console123
     policy: consoleAdmin
+
+persistence:
+  enabled: true
+  annotations: {}
+  existingClaim: ""
+  storageClass: ""
+  volumeName: ""
+  accessMode: ReadWriteOnce
+  size: 5Gi
