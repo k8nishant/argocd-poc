@@ -1,11 +1,9 @@
 ## minio mode, i.e. standalone or distributed
 mode: standalone ## other supported values are "distributed"
-
-rootUser: "minio"
-rootPassword: "minio"
-
-
 replicas: 1
+
+rootUser: "miniouser"
+rootPassword: "minioPassword"
 
 resources:
   requests:
