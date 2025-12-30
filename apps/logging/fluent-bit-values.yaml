@@ -51,11 +51,9 @@ filters:
 # ---------------------------------------------------
 outputs:
   - name: opensearch
-    match: kube.*
+    match: kube.var.log.containers.*
     host: opensearch-cluster-master.logging.svc.cluster.local
     port: 9200
-    index: kubernetes-logs
-    type: _doc
     logstashFormat: On
     logstashPrefix: kubernetes-logs
     timeKey: "@timestamp"
