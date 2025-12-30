@@ -95,6 +95,7 @@ extraEnvs:
 
 
 readinessProbe:
+  tcpSocket: null
   httpGet:
     scheme: HTTP
     path: /_cluster/health
@@ -104,6 +105,7 @@ readinessProbe:
   failureThreshold: 10
 
 startupProbe:
+  tcpSocket: null
   httpGet:
     scheme: HTTP
     path: /_cluster/health
