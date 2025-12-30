@@ -93,18 +93,6 @@ extraEnvs:
 ##  -n logging \
 ##  --from-literal=OPENSEARCH_INITIAL_ADMIN_PASSWORD='XXXXXXXXXX'
 
-# ---------------------------
-# Disable default probes from chart
-# ---------------------------
-readinessProbe:
-  enabled: false
-
-startupProbe:
-  enabled: false
-
-livenessProbe:
-  enabled: false
-
 
 readinessProbe:
   httpGet:
