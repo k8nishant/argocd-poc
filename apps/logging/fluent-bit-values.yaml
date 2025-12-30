@@ -15,7 +15,7 @@ service:
 # ---------------------------------------------------
 inputs:
   - name: tail
-    tag: kube.*
+    tag: kube.var.log.containers.*
     path: /var/log/containers/*.log
     multilineParser: docker, cri
     refreshInterval: 5
@@ -23,18 +23,17 @@ inputs:
     skipLongLines: On
     readFromHead: Off
 
+
 # ---------------------------------------------------
 # Filters: Kubernetes metadata enrichment
 # ---------------------------------------------------
 filters:
   - name: kubernetes
-    match: kube.*
+    match: kube.var.log.containers.*
     kubeURL: https://kubernetes.default.svc:443
     kubeCAFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     kubeTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    kubeTagPrefix: kube.var.log.containers.
     mergeLog: On
-    mergeLogKey: log_processed
     keepLog: Off
     labels: On
     annotations: Off
@@ -83,17 +82,13 @@ tolerations:
 volumeMounts:
   - name: varlog
     mountPath: /var/log
-  - name: containers
-    mountPath: /var/lib/docker/containers
-    readOnly: true
+
 
 volumes:
   - name: varlog
     hostPath:
       path: /var/log
-  - name: containers
-    hostPath:
-      path: /var/lib/docker/containers
+
 
 # ---------------------------------------------------
 # Resources
