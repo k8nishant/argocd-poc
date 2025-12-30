@@ -21,15 +21,15 @@ config:
 # ---------------------------
 # JVM & resource tuning
 # ---------------------------
-opensearchJavaOpts: "-Xms128m -Xmx128m"
+opensearchJavaOpts: "-Xms512m -Xmx512m"
 
 resources:
   requests:
-    cpu: "50m"
-    memory: "512Mi"
+    cpu: "200m"
+    memory: "1Gi"
   limits:
-    cpu: "125m"
-    memory: "1024Mi"
+    cpu: "500m"
+    memory: "1Gi"
 
 # ---------------------------
 # Persistence (PVC)
@@ -92,3 +92,22 @@ extraEnvs:
 ##kubectl create secret generic opensearch-admin-secret \
 ##  -n logging \
 ##  --from-literal=OPENSEARCH_INITIAL_ADMIN_PASSWORD='XXXXXXXXXX'
+
+readinessProbe:
+  httpGet:
+    scheme: HTTP
+    path: /_cluster/health
+    port: 9200
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 10
+
+startupProbe:
+  httpGet:
+    scheme: HTTP
+    path: /_cluster/health
+    port: 9200
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 30
+
