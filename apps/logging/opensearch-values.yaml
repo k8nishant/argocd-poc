@@ -14,9 +14,11 @@ config:
     discovery.type: single-node
     network.host: 0.0.0.0
     plugins.security.disabled: false
-    plugins.security.allow_default_init_securityindex: true
+    plugins.security.ssl.transport.enabled: true
+    plugins.security.ssl.transport.enforce_hostname_verification: false
+    plugins.security.ssl.transport.resolve_hostname: false
     plugins.security.ssl.http.enabled: false
-    plugins.security.ssl.transport.enabled: false
+
 
 # ---------------------------
 # JVM & resource tuning
@@ -110,7 +112,7 @@ startupProbe:
     scheme: HTTP
     path: /_cluster/health
     port: 9200
-  initialDelaySeconds: 60
+  initialDelaySeconds: 90
   periodSeconds: 10
   failureThreshold: 30
 
