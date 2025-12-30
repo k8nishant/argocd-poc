@@ -42,7 +42,7 @@ extraEnvs:
   - name: LOGGING_VERBOSE
     value: "false"
   - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
-    value: true
+    value: "true"
 
 # ---------------------------
 # Health checks
