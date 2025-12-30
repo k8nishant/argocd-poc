@@ -13,53 +13,36 @@ service:
   httpListen: 0.0.0.0
   httpPort: 2020
 
-# ---------------------------------------------------
-# Input: Kubernetes container logs
-# ---------------------------------------------------
-inputs:
-  - name: tail
-    tag: kube.var.log.containers.*
-    path: /var/log/containers/*.log
-    multilineParser: docker, cri
-    refreshInterval: 5
-    memBufLimit: 50MB
-    skipLongLines: On
-    readFromHead: Off
+## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file
+config:
+  inputs: |
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Tag kube.*
+        multiline.parser docker, cri
+        Mem_Buf_Limit 50MB
+        Skip_Long_Lines On
 
+  filters: |
+    [FILTER]
+        Name kubernetes
+        Match kube.*
+        Merge_Log On
+        Keep_Log Off
+        K8S-Logging.Parser On
+        K8S-Logging.Exclude On
 
-# ---------------------------------------------------
-# Filters: Kubernetes metadata enrichment
-# ---------------------------------------------------
-filters:
-  - name: kubernetes
-    match: kube.var.log.containers.*
-    kubeURL: https://kubernetes.default.svc:443
-    kubeCAFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    kubeTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    mergeLog: On
-    keepLog: Off
-    labels: On
-    annotations: Off
+  outputs: |
+    [OUTPUT]
+        Name opensearch
+        Match kube.*
+        Host opensearch-cluster-master.logging.svc.cluster.local
+        Port 9200
+        Logstash_Format On
+        Logstash_Prefix kubernetes-logs
+        Retry_Limit False
 
-  # Optional: remove noisy fields
-  - name: modify
-    match: kube.*
-    remove: stream
-
-# ---------------------------------------------------
-# Output: OpenSearch
-# ---------------------------------------------------
-outputs:
-  - name: opensearch
-    match: kube.var.log.containers.*
-    host: opensearch-cluster-master.logging.svc.cluster.local
-    port: 9200
-    logstashFormat: On
-    logstashPrefix: kubernetes-logs
-    timeKey: "@timestamp"
-    replaceDots: On
-    retryLimit: False
-    suppressTypeName: On
 
 # ---------------------------------------------------
 # Kubernetes-specific settings
