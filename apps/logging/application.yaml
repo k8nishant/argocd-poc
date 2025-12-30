@@ -28,9 +28,9 @@ spec:
         releaseName: opensearch-dashboards
         valueFiles:
           - $values/apps/logging/opensearch-dashboards-values.yaml
-    - repoURL: git@github.com:k8nishant/argocd-poc.git
-      targetRevision: main
-      path: apps/logging/ingress/
+    # - repoURL: git@github.com:k8nishant/argocd-poc.git
+    #   targetRevision: main
+    #   path: apps/logging/ingress/
 
     - repoURL: git@github.com:k8nishant/argocd-poc.git
       targetRevision: main
