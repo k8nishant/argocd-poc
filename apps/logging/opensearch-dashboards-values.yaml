@@ -43,16 +43,16 @@ extraEnvs:
 # ---------------------------
 # Health checks
 # ---------------------------
-livenessProbe:
-  httpGet:
-    path: /api/status
-    port: 5601
-  initialDelaySeconds: 30
-  periodSeconds: 10
+# livenessProbe:
+#   httpGet:
+#     path: /api/status
+#     port: 5601
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
 
-readinessProbe:
-  httpGet:
-    path: /api/status
-    port: 5601
-  initialDelaySeconds: 20
-  periodSeconds: 10
+# readinessProbe:
+#   httpGet:
+#     path: /api/status
+#     port: 5601
+#   initialDelaySeconds: 20
+#   periodSeconds: 10
