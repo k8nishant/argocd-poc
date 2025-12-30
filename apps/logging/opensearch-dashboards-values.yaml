@@ -1,0 +1,58 @@
+# ---------------------------
+# OpenSearch connection
+# ---------------------------
+opensearchHosts: "http://opensearch-cluster-master:9200"
+
+# ---------------------------
+# Replica & resources
+# ---------------------------
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 20m
+    memory: 128Mi
+  limits:
+    cpu: 50m
+    memory: 512Mi
+
+# ---------------------------
+# Service configuration
+# ---------------------------
+service:
+  type: ClusterIP
+  port: 5601
+
+# ---------------------------
+# Pod security (safe defaults)
+# ---------------------------
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+
+# ---------------------------
+# Logging
+# ---------------------------
+extraEnvs:
+  - name: LOGGING_VERBOSE
+    value: "false"
+
+# ---------------------------
+# Health checks
+# ---------------------------
+livenessProbe:
+  httpGet:
+    path: /api/status
+    port: 5601
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /api/status
+    port: 5601
+  initialDelaySeconds: 20
+  periodSeconds: 10

@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluent-app
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://fluent.github.io/helm-charts
+      chart: fluent-bit
+      targetRevision: 0.54.0
+      helm:
+        releaseName: fluent-bit
+        valueFiles:
+          - $values/apps/logging/fluent-bit-values.yaml
+    - repoURL: https://opensearch-project.github.io/helm-charts
+      chart: opensearch
+      targetRevision: 3.4.0
+      helm:
+        releaseName: opensearch
+        valueFiles:
+          - $values/apps/logging/opensearch-values.yaml
+    - repoURL: https://opensearch-project.github.io/helm-charts
+      chart: opensearch-dashboards
+      targetRevision: 3.4.0
+      helm:
+        releaseName: opensearch-dashboards
+        valueFiles:
+          - $values/apps/logging/opensearch-dashboards-values.yaml
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: logging
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

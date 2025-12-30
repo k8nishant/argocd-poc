@@ -1,0 +1,82 @@
+# ---------------------------
+# Cluster basics
+# ---------------------------
+clusterName: opensearch-cluster
+nodeGroup: master
+
+replicas: 1
+
+# Single-node discovery (VERY IMPORTANT for POC)
+config:
+  opensearch.yml: |
+    cluster.name: opensearch-cluster
+    node.name: ${HOSTNAME}
+    discovery.type: single-node
+    network.host: 0.0.0.0
+    plugins.security.disabled: true
+
+# ---------------------------
+# JVM & resource tuning
+# ---------------------------
+opensearchJavaOpts: "-Xms512m -Xmx512m"
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "128Mi"
+  limits:
+    cpu: "100m"
+    memory: "512Mi"
+
+# ---------------------------
+# Persistence (PVC)
+# ---------------------------
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: ""   # keep empty to use default SC
+
+# ---------------------------
+# Service exposure
+# ---------------------------
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 9200
+    - name: transport
+      port: 9300
+
+# ---------------------------
+# Security (disabled for POC)
+# ---------------------------
+securityConfig:
+  enabled: false
+
+# ---------------------------
+# Pod scheduling (safe defaults)
+# ---------------------------
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+
+# ---------------------------
+# Anti-affinity (disabled since replicas=1)
+# ---------------------------
+antiAffinity: "soft"
+
+# ---------------------------
+# Init container (filesystem permissions)
+# ---------------------------
+sysctlInitContainer:
+  enabled: true
+
+# ---------------------------
+# Logging level
+# ---------------------------
+extraEnvs:
+  - name: OPENSEARCH_LOG_LEVEL
+    value: INFO

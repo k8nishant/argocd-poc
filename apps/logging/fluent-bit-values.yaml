@@ -1,0 +1,126 @@
+# ---------------------------------------------------
+# Fluent Bit global settings
+# ---------------------------------------------------
+service:
+  flush: 5
+  daemon: Off
+  logLevel: info
+  parsersFile: parsers.conf
+  httpServer: On
+  httpListen: 0.0.0.0
+  httpPort: 2020
+
+# ---------------------------------------------------
+# Input: Kubernetes container logs
+# ---------------------------------------------------
+inputs:
+  - name: tail
+    tag: kube.*
+    path: /var/log/containers/*.log
+    multilineParser: docker, cri
+    refreshInterval: 5
+    memBufLimit: 50MB
+    skipLongLines: On
+    readFromHead: Off
+
+# ---------------------------------------------------
+# Filters: Kubernetes metadata enrichment
+# ---------------------------------------------------
+filters:
+  - name: kubernetes
+    match: kube.*
+    kubeURL: https://kubernetes.default.svc:443
+    kubeCAFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    kubeTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    kubeTagPrefix: kube.var.log.containers.
+    mergeLog: On
+    mergeLogKey: log_processed
+    keepLog: Off
+    labels: On
+    annotations: Off
+
+  # Optional: remove noisy fields
+  - name: modify
+    match: kube.*
+    remove: stream
+
+# ---------------------------------------------------
+# Output: OpenSearch
+# ---------------------------------------------------
+outputs:
+  - name: opensearch
+    match: kube.*
+    host: opensearch-cluster-master.logging.svc.cluster.local
+    port: 9200
+    index: kubernetes-logs
+    type: _doc
+    logstashFormat: On
+    logstashPrefix: kubernetes-logs
+    timeKey: "@timestamp"
+    replaceDots: On
+    retryLimit: False
+    suppressTypeName: On
+
+# ---------------------------------------------------
+# Kubernetes-specific settings
+# ---------------------------------------------------
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name: fluent-bit
+
+daemonSet:
+  enabled: true
+
+tolerations:
+  - operator: Exists
+
+# ---------------------------------------------------
+# Volumes (required for container logs)
+# ---------------------------------------------------
+volumeMounts:
+  - name: varlog
+    mountPath: /var/log
+  - name: containers
+    mountPath: /var/lib/docker/containers
+    readOnly: true
+
+volumes:
+  - name: varlog
+    hostPath:
+      path: /var/log
+  - name: containers
+    hostPath:
+      path: /var/lib/docker/containers
+
+# ---------------------------------------------------
+# Resources
+# ---------------------------------------------------
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 512Mi
+
+# ---------------------------------------------------
+# Pod security (best practice)
+# ---------------------------------------------------
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+
+# ---------------------------------------------------
+# Metrics (Prometheus scraping)
+# ---------------------------------------------------
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: false
