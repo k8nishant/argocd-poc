@@ -41,6 +41,7 @@ config:
         Port 9200
         Logstash_Format On
         Logstash_Prefix kubernetes-logs
+        Suppress_Type_Name On
         Retry_Limit False
 
 
