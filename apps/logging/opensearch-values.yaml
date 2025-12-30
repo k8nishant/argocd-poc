@@ -1,6 +1,7 @@
 # ---------------------------
 # Cluster basics
 # ---------------------------
+singleNode: true
 clusterName: opensearch-cluster
 nodeGroup: master
 
