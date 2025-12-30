@@ -4,6 +4,11 @@
 opensearchHosts: "http://opensearch-cluster-master:9200"
 DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
 
+
+extraEnvs:
+  - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
+    value: true
+
 # ---------------------------
 # Replica & resources
 # ---------------------------
@@ -76,3 +81,5 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+
