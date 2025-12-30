@@ -4,9 +4,6 @@
 opensearchHosts: "http://opensearch-cluster-master:9200"
 
 
-extraEnvs:
-  - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
-    value: true
 
 # ---------------------------
 # Replica & resources
@@ -44,6 +41,8 @@ securityContext:
 extraEnvs:
   - name: LOGGING_VERBOSE
     value: "false"
+  - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
+    value: true
 
 # ---------------------------
 # Health checks
