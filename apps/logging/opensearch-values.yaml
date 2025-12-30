@@ -13,20 +13,23 @@ config:
     node.name: ${HOSTNAME}
     discovery.type: single-node
     network.host: 0.0.0.0
-    plugins.security.disabled: true
+    plugins.security.disabled: false
+    plugins.security.allow_default_init_securityindex: true
+    plugins.security.ssl.http.enabled: false
+    plugins.security.ssl.transport.enabled: false
 
 # ---------------------------
 # JVM & resource tuning
 # ---------------------------
-opensearchJavaOpts: "-Xms512m -Xmx512m"
+opensearchJavaOpts: "-Xms128m -Xmx128m"
 
 resources:
   requests:
     cpu: "50m"
-    memory: "128Mi"
-  limits:
-    cpu: "100m"
     memory: "512Mi"
+  limits:
+    cpu: "125m"
+    memory: "1024Mi"
 
 # ---------------------------
 # Persistence (PVC)
