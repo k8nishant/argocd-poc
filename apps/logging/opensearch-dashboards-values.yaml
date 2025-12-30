@@ -2,6 +2,7 @@
 # OpenSearch connection
 # ---------------------------
 opensearchHosts: "http://opensearch-cluster-master:9200"
+DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
 
 # ---------------------------
 # Replica & resources
