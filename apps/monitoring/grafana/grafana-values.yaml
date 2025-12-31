@@ -53,3 +53,6 @@ ingress:
   path: /
   pathType: Prefix
 
+  ## Grafana admin password, run the command as follows:
+  # kubectl get secret --namespace monitoring my-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+

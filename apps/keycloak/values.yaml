@@ -1,0 +1,62 @@
+replicaCount: 1
+
+image:
+  debug: false
+
+auth:
+  adminUser: admin
+  adminPassword: admin123   # POC only
+
+proxy: edge
+
+service:
+  type: ClusterIP
+  ports:
+    http: 8080
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: keycloak.127.0.0.1.nip.io
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+  tls: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 300m
+    memory: 512Mi
+
+extraEnvVars:
+  - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HOSTNAME_STRICT
+    value: "false"
+  - name: KC_PROXY
+    value: "edge"
+
+postgresql:
+  enabled: true
+  auth:
+    username: keycloak
+    password: keycloak123    # POC only
+    database: keycloak
+  primary:
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+metrics:
+  enabled: false
+
+persistence:
+  enabled: false
