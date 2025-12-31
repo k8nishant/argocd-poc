@@ -16,7 +16,7 @@ spec:
           - $values/apps/logging/fluent-bit-values.yaml
     - repoURL: https://helm.elastic.co
       chart: eck-operator
-      targetRevision: 0.54.0
+      targetRevision: 3.2.0
       helm:
         releaseName: elastic-operator
         valueFiles:
