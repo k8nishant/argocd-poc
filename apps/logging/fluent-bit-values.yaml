@@ -58,6 +58,9 @@ config:
         Suppress_Type_Name On
         Retry_Limit False
 
+# kubectl get secret elasticsearch-es-elastic-user -n logging \
+#   -o go-template='{{.data.elastic | base64decode}}'
+
 
 # ---------------------------------------------------
 # Kubernetes-specific settings
