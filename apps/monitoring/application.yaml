@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack 
+      targetRevision: 35.0.0 
+      helm:
+        releaseName: prometheus
+        valueFiles:
+          - $values/apps/monitoring/values.yaml 
+        
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      path: $values/apps/monitoring/grafana
+   
+    - repoURL: https://grafana.github.io/helm-charts 
+      chart: grafana  
+      targetRevision: 35.0.0
+      helm:
+        releaseName: grafana
+        valueFiles:
+          - $values/apps/monitoring/grafana/grafana-values.yaml
+
+    - repoURL: git@github.com:k8nishant/argocd-poc.git  
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      prune: true   # Automatically prune resources that are no longer needed
+      selfHeal: true  # Ensure that the resources are kept in sync even after manual changes
+
+    syncOptions:
+      - CreateNamespace=true  # Automatically create the namespace if it doesn't exist
+      - ServerSideApply=true  # Use server-side apply for better conflict management

@@ -1,0 +1,53 @@
+
+# Replica count — keep single for PoC
+replicas: 1
+
+# Disable autoscaling for PoC
+autoscaling:
+  enabled: false
+
+# Resource requests/limits (minimal)
+resources:
+  requests:
+    cpu: "50m"
+    memory: "128Mi"
+  limits:
+    cpu: "100m"
+    memory: "256Mi"
+
+# Use the Grafana official image (adjust version as needed)
+# image:
+#   repository: grafana/grafana
+#   tag: "latest"
+#   pullPolicy: IfNotPresent
+
+# Disable persistence for very minimal PoC (data lost on restart)
+persistence:
+  enabled: false
+
+# Expose as ClusterIP (simple internal svc)
+service:
+  type: ClusterIP
+  port: 80
+
+# Admin credentials (for quick access; in PoC it's ok)
+adminUser: admin
+adminPassword: admin
+
+# Disable sidecar and other extras by default
+sidecar:
+  dashboards:
+    enabled: false
+  datasources:
+    enabled: true
+    label: grafana_datasource
+
+ingress:
+  enabled: true
+  hosts:
+    - host: grafana.127.0.0.1.nip.io
+      paths: ["/"]
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
