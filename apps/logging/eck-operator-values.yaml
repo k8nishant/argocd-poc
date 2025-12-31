@@ -1,0 +1,50 @@
+# values.yaml for elastic/eck-operator (POC / minimal)
+
+replicaCount: 1
+
+# image:
+#   repository: docker.elastic.co/eck/eck-operator
+#   tag: 2.11.0
+#   pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 150Mi
+  limits:
+    cpu: 500m
+    memory: 300Mi
+
+# Disable webhook for very small clusters (optional but helps)
+webhook:
+  enabled: false
+
+# Reduce metrics overhead
+metrics:
+  enabled: false
+
+# Leader election namespace (default is operator namespace)
+leaderElection:
+  enabled: true
+
+# Pod security context
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+# Container security context
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+
+# Node scheduling (optional)
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Reduce reconciliation load
+config:
+  logVerbosity: "0"   # 0 = info (minimal logs)
