@@ -22,6 +22,11 @@ spec:
         valueFiles:
           - $values/apps/logging/eck-operator-values.yaml
     
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      path: apps/logging/elastic/
+
+
     # - repoURL: https://opensearch-project.github.io/helm-charts
     #   chart: opensearch
     #   targetRevision: 3.4.0
