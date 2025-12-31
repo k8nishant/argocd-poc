@@ -24,7 +24,7 @@ spec:
       helm:
         releaseName: grafana
         valueFiles:
-          - apps/monitoring/grafana/grafana-values.yaml
+          - $values/apps/monitoring/grafana/grafana-values.yaml
 
     - repoURL: git@github.com:k8nishant/argocd-poc.git  
       targetRevision: main
