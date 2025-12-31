@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
 
-  source:
+  sources:
     - repoURL: oci://quay.io/jetstack/charts/cert-manager
       chart: cert-manager
       targetRevision: v1.19.2
@@ -14,6 +14,11 @@ spec:
         releaseName: cert-manager
         valueFiles:
           - $values/apps/cert-manager/values.yaml
+
+    - repoURL: git@github.com:k8nishant/argocd-poc.git
+      targetRevision: main
+      path: apps/cert-manager/ClusterIssuer
+
     - repoURL: git@github.com:k8nishant/argocd-poc.git
       targetRevision: main
       ref: values
