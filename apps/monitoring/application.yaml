@@ -16,7 +16,7 @@ spec:
         
     - repoURL: git@github.com:k8nishant/argocd-poc.git
       targetRevision: main
-      path: $values/apps/monitoring/grafana
+      path: apps/monitoring/grafana/template
    
     - repoURL: https://grafana.github.io/helm-charts 
       chart: grafana  
@@ -24,7 +24,7 @@ spec:
       helm:
         releaseName: grafana
         valueFiles:
-          - $values/apps/monitoring/grafana/grafana-values.yaml
+          - apps/monitoring/grafana/grafana-values.yaml
 
     - repoURL: git@github.com:k8nishant/argocd-poc.git  
       targetRevision: main
