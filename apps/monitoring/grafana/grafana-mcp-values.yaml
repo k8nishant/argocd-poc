@@ -9,6 +9,9 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   hosts:
-    - grafana-mcp.127.0.0.1.nip.io
-  path: /
-  pathType: Prefix
+    - host: grafana-mcp.127.0.0.1.nip.io
+      paths:
+        - path: /
+          pathType: Prefix
+
+  tls: []
