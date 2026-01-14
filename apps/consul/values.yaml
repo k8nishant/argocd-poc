@@ -31,4 +31,4 @@ ui:
     type: ClusterIP
 # Configures and installs the automatic Consul Connect sidecar injector.
 connectInject:
-  enabled: true
+  enabled: false
