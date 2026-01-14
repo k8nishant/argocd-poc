@@ -28,7 +28,7 @@ spec:
 
     - repoURL: https://grafana.github.io/helm-charts 
       chart: grafana/grafana-mcp  
-      targetRevision: 10.4.3
+      targetRevision: 0.2.2
       helm:
         releaseName: grafana-mcp
         valueFiles:
