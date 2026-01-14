@@ -8,5 +8,6 @@ spec:
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
+  commonName: keycloak.127.0.0.1.nip.io
   dnsNames:
     - keycloak.127.0.0.1.nip.io
