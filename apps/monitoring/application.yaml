@@ -27,7 +27,7 @@ spec:
           - $values/apps/monitoring/grafana/grafana-values.yaml
 
     - repoURL: https://grafana.github.io/helm-charts 
-      chart: grafana/grafana-mcp  
+      chart: grafana-mcp  
       targetRevision: 0.2.2
       helm:
         releaseName: grafana-mcp
