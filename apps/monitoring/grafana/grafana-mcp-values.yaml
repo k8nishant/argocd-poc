@@ -1,0 +1,3 @@
+grafana:
+  apiKey:
+  url: https://grafana.monitoring.svc

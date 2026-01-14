@@ -26,6 +26,14 @@ spec:
         valueFiles:
           - $values/apps/monitoring/grafana/grafana-values.yaml
 
+    - repoURL: https://grafana.github.io/helm-charts 
+      chart: grafana/grafana-mcp  
+      targetRevision: 10.4.3
+      helm:
+        releaseName: grafana-mcp
+        valueFiles:
+          - $values/apps/monitoring/grafana/grafana-mcp-values.yaml
+
     - repoURL: git@github.com:k8nishant/argocd-poc.git  
       targetRevision: main
       ref: values
