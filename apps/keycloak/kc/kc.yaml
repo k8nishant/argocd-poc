@@ -16,6 +16,24 @@ spec:
   http:
     tlsSecret: keycloak-tls
   hostname:
-    hostname: test.keycloak.org
+    hostname: keycloak.127.0.0.1.nip.io
   proxy:
     headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
+  
+  ingress:
+    enabled: true
+    className: nginx
+
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+    rules:
+      - host: keycloak.127.0.0.1.nip.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+    tls:
+      - hosts:
+          - keycloak.127.0.0.1.nip.io
+        secretName: keycloak-tls
