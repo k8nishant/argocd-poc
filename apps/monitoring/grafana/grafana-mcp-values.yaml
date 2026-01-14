@@ -4,7 +4,7 @@ grafana:
 
 ingress:
   enabled: true
-  ingressClassName: nginx
+  className: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
